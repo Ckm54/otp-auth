@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:phone_auth_firebase/screens/register_screen.dart';
 import 'package:phone_auth_firebase/widgets/custom_button.dart';
+import 'package:phone_auth_firebase/widgets/widgets.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -36,7 +38,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 SizedBox(
                   width: double.infinity,
                   height: 50,
-                  child: CustomButton(text: "Get Started", onPressed: () {}),
+                  child: CustomButton(
+                      text: "Get Started",
+                      onPressed: () {
+                        nextScreen(context, const RegisterScreen());
+                      }),
                 )
               ],
             ),

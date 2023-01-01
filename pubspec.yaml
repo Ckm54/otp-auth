@@ -35,8 +35,10 @@ dependencies:
   firebase_auth: ^4.2.4
   firebase_core: ^2.4.1
   firebase_storage: ^11.0.10
+  pinput: ^2.2.21
   flutter:
     sdk: flutter
+  provider: ^6.0.5
   shared_preferences: ^2.0.15
 
 dev_dependencies:

@@ -8,3 +8,8 @@ void nextScreenReplace(context, page) {
   Navigator.pushReplacement(
       context, MaterialPageRoute(builder: (context) => page));
 }
+
+void nextScreenPushAndRemoveUntil(context, page) {
+  Navigator.pushAndRemoveUntil(
+      context, MaterialPageRoute(builder: (context) => page), (route) => false);
+}

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "802782001136",
+    "project_id": "fir-authflutter-cbdbc",
+    "storage_bucket": "fir-authflutter-cbdbc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:802782001136:android:52c787d4afdd463359cf35",
+        "android_client_info": {
+          "package_name": "com.example.phone_auth_firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "802782001136-v4guc53ptlbh6kq7ks87glqietrgrfsi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.phone_auth_firebase",
+            "certificate_hash": "160b921a9878f75dc8c5de5d13c8418bddd32519"
+          }
+        },
+        {
+          "client_id": "802782001136-nj61r699k75o99hhkjbvdopnkdbu2g6s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCt9qTPJkjCOg6SQ2zAwMYdRNkjp9aVUlQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "802782001136-nj61r699k75o99hhkjbvdopnkdbu2g6s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:phone_auth_firebase/screens/otp_screen.dart';
@@ -13,7 +14,8 @@ class AuthProvider extends ChangeNotifier {
   String? _uid;
   String get uid => _uid!;
 
-  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   AuthProvider() {
     checkSignedIn();
@@ -28,10 +30,10 @@ class AuthProvider extends ChangeNotifier {
 
   void signInWithPhone(BuildContext context, String phoneNumber) async {
     try {
-      await firebaseAuth.verifyPhoneNumber(
+      await _firebaseAuth.verifyPhoneNumber(
         phoneNumber: phoneNumber,
         verificationCompleted: (PhoneAuthCredential phoneAuthCredential) async {
-          await firebaseAuth.signInWithCredential(phoneAuthCredential);
+          await _firebaseAuth.signInWithCredential(phoneAuthCredential);
         },
         verificationFailed: (error) {
           throw Exception(error.message);
@@ -64,7 +66,7 @@ class AuthProvider extends ChangeNotifier {
           verificationId: verificationId, smsCode: userOtp);
 
       //* get user returned
-      User? user = (await firebaseAuth.signInWithCredential(credential)).user;
+      User? user = (await _firebaseAuth.signInWithCredential(credential)).user;
 
       if (user != null) {
         // set user id
@@ -78,6 +80,19 @@ class AuthProvider extends ChangeNotifier {
       showSnackBar(context, e.message.toString());
       _isLoading = false;
       notifyListeners();
+    }
+  }
+
+  //** DATABASE OPERATIONS */
+  Future<bool> checkExistingUser() async {
+    DocumentSnapshot snapshot =
+        await _firebaseFirestore.collection("users").doc(_uid).get();
+    if (snapshot.exists) {
+      print("USER EXISTS");
+      return true;
+    } else {
+      print("USER DOES NOT EXIST");
+      return false;
     }
   }
 }

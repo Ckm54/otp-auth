@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:phone_auth_firebase/provider/auth_provider.dart';
+import 'package:phone_auth_firebase/screens/user_information_screen.dart';
 import 'package:phone_auth_firebase/utils/utils.dart';
 import 'package:phone_auth_firebase/widgets/custom_button.dart';
+import 'package:phone_auth_firebase/widgets/widgets.dart';
 import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
 
@@ -84,7 +86,7 @@ class _OtpScreenState extends State<OtpScreen> {
                             fontWeight: FontWeight.w600,
                           ),
                         ),
-                        onSubmitted: (value) {
+                        onCompleted: (value) {
                           setState(() {
                             otpCode = value;
                           });
@@ -146,6 +148,14 @@ class _OtpScreenState extends State<OtpScreen> {
       userOtp: userOtp,
       onSuccess: () {
         // checking whether user exists in the database
+        authProvider.checkExistingUser().then((value) async {
+          if (value == true) {
+            //* user exists in application
+          } else {
+            //* user does not exist
+            nextScreenPushAndRemoveUntil(context, const UserInformationScreen());
+          }
+        });
       },
     );
   }

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:phone_auth_firebase/provider/auth_provider.dart';
+import 'package:phone_auth_firebase/screens/home_screen.dart';
 import 'package:phone_auth_firebase/screens/register_screen.dart';
 import 'package:phone_auth_firebase/widgets/custom_button.dart';
 import 'package:phone_auth_firebase/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -13,6 +16,8 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -41,7 +46,10 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   child: CustomButton(
                       text: "Get Started",
                       onPressed: () {
-                        nextScreen(context, const RegisterScreen());
+                        authProvider.isSignedIn == true
+                        // when true fetch shared preference data
+                            ? nextScreen(context, const HomeScreen())
+                            : nextScreen(context, const RegisterScreen());
                       }),
                 )
               ],

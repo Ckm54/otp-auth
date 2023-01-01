@@ -1,6 +1,8 @@
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:phone_auth_firebase/provider/auth_provider.dart';
 import 'package:phone_auth_firebase/widgets/custom_button.dart';
+import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -31,6 +33,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Center(
           child: Padding(
@@ -61,7 +64,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
+                  autofocus: true,
                   cursorColor: Colors.purple,
+                  keyboardType: TextInputType.number,
                   controller: phoneController,
                   onChanged: (value) {
                     setState(() {
@@ -128,13 +133,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             )
                           : null),
                 ),
-                const SizedBox(height: 20.0),
+                const SizedBox(height: 15.0),
 
                 // login button
                 SizedBox(
                   width: double.infinity,
                   height: 50,
-                  child: CustomButton(text: "Login", onPressed: () {}),
+                  child: CustomButton(
+                    text: "Login",
+                    onPressed: () => sendPhoneNumber(),
+                  ),
                 )
               ],
             ),
@@ -142,5 +150,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
     );
+  }
+
+  void sendPhoneNumber() {
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    String phoneNumber = phoneController.text.trim();
+
+    authProvider.signInWithPhone(
+        context, "+${selectedCountry.phoneCode}$phoneNumber");
   }
 }

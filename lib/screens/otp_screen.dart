@@ -151,8 +151,21 @@ class _OtpScreenState extends State<OtpScreen> {
         // checking whether user exists in the database
         authProvider.checkExistingUser().then((value) async {
           if (value == true) {
-            //* user exists in application
-            nextScreenPushAndRemoveUntil(context, const HomeScreen());
+            //* user exists in application 
+            //* -> get data from firestore 
+            //* -> save data to shared preferences
+            //* -> set SignIn 
+            //* -> navigate user to homescreen
+            authProvider.getUserDataFromFirestore().then(
+              (value) => authProvider.saveDataToSharedPreferences().then(
+                (value) => authProvider.setSignIn().then(
+                      (value) => nextScreenPushAndRemoveUntil(
+                        context,
+                        const HomeScreen(),
+                      ),
+                    ),
+                  ),
+                );
           } else {
             //* user does not exist
             nextScreenPushAndRemoveUntil(

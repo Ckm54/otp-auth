@@ -44,13 +44,22 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   width: double.infinity,
                   height: 50,
                   child: CustomButton(
-                      text: "Get Started",
-                      onPressed: () {
-                        authProvider.isSignedIn == true
-                        // when true fetch shared preference data
-                            ? nextScreen(context, const HomeScreen())
-                            : nextScreen(context, const RegisterScreen());
-                      }),
+                    text: "Get Started",
+                    onPressed: () async {
+                      if (authProvider.isSignedIn == true) {
+                        await authProvider
+                            .getDataFromSharedPreferences()
+                            .whenComplete(
+                              () => nextScreen(
+                                context,
+                                const HomeScreen(),
+                              ),
+                            );
+                      } else {
+                        nextScreen(context, const RegisterScreen());
+                      }
+                    },
+                  ),
                 )
               ],
             ),

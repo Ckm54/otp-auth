@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:phone_auth_firebase/provider/auth_provider.dart';
+import 'package:phone_auth_firebase/screens/welcome_screen.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,7 +20,16 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text("Flutter Phone Auth"),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              authProvider.userSignOut().then((value) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const WelcomeScreen(),
+                  ),
+                );
+              });
+            },
             icon: const Icon(Icons.exit_to_app),
           ),
         ],

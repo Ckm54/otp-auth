@@ -150,6 +150,26 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+  //* get user data from firestore
+  Future getUserDataFromFirestore() async {
+    await _firebaseFirestore
+        .collection("users")
+        .doc(_firebaseAuth.currentUser!.uid)
+        .get()
+        .then((DocumentSnapshot snapshot) {
+      _userModel = UserModel(
+        name: snapshot["name"],
+        email: snapshot["email"],
+        bio: snapshot["bio"],
+        profilePic: snapshot["profilePic"],
+        createdAt: snapshot["createdAt"],
+        phoneNumber: snapshot["phoneNumber"],
+        uid: snapshot["uid"],
+      );
+      _uid = usersModel.uid;
+    });
+  }
+
   //* upload image to firebase storage
   Future<String> uploadFileToStorage(String ref, File file) async {
     UploadTask uploadTask = _firebaseStorage.ref().child(ref).putFile(file);

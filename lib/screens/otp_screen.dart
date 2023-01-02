@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:phone_auth_firebase/provider/auth_provider.dart';
+import 'package:phone_auth_firebase/screens/home_screen.dart';
 import 'package:phone_auth_firebase/screens/user_information_screen.dart';
 import 'package:phone_auth_firebase/utils/utils.dart';
 import 'package:phone_auth_firebase/widgets/custom_button.dart';
@@ -151,9 +152,11 @@ class _OtpScreenState extends State<OtpScreen> {
         authProvider.checkExistingUser().then((value) async {
           if (value == true) {
             //* user exists in application
+            nextScreenPushAndRemoveUntil(context, const HomeScreen());
           } else {
             //* user does not exist
-            nextScreenPushAndRemoveUntil(context, const UserInformationScreen());
+            nextScreenPushAndRemoveUntil(
+                context, const UserInformationScreen());
           }
         });
       },
